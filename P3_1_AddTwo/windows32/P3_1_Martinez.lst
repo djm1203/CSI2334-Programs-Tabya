@@ -1,0 +1,122 @@
+Microsoft (R) Macro Assembler Version 14.37.32824.0	    09/25/23 16:23:46
+P3_1_Martinez.asm					     Page 1 - 1
+
+
+				;Author:                  Derek Martinez
+				;Assignment Title:        P3_1 Sum of Two
+				;Assignment Description:  create a program that gets the sum of two numbers
+				;
+				;
+				;Due Date:                9-26-2023
+				;Date Created:            9-23-2023
+				;Date Last Modified:      9-24-2023
+
+				.586
+				.MODEL FLAT
+
+				INCLUDE io.h            ; Include the header file for input/output
+			      C ; IO.H -- header file for I/O macros (listing suppressed)
+			      C .NOLIST      ; turn off listing
+			      C .LIST        ; begin listing
+			      C 
+
+				.STACK 4096             ; Set the size to 4096 bytes
+
+ 00000000			.DATA
+ 00000000 45 6E 74 65 72	prompt1 BYTE    "Enter first number", 0  ; Define a string for the first number
+	   20 66 69 72 73
+	   74 20 6E 75 6D
+	   62 65 72 00
+ 00000013 45 6E 74 65 72	prompt2 BYTE    "Enter second number", 0 ; Define a string for the second number
+	   20 73 65 63 6F
+	   6E 64 20 6E 75
+	   6D 62 65 72 00
+ 00000027  00000028 [		string  BYTE    40 DUP (?)               ; Define a buffer to store input
+	    00
+	   ]
+ 0000004F 54 68 65 20 73	resultLbl BYTE  "The sum is", 0          ; Define a label for the sum message
+	   75 6D 20 69 73
+	   00
+ 0000005A  0000000B [		sum     BYTE    11 DUP (?), 0            ; Define a buffer to store the sum
+	    00
+	   ] 00
+
+ 00000000			.CODE
+ 00000000			_MainProc PROC
+				        input   prompt1, string, 40      ; Read user input for the first number
+				        atod    string                   ; Convert the input to an integer and store
+ 0000002D  8B D8		        mov     ebx, eax                 ; Copy the value from EAX to EBX
+
+				        input   prompt2, string, 40      ; Read user input for the second number
+				        atod    string                   ; Convert the input to an integer and store
+ 0000005C  03 C3		        add     eax, ebx                 ; Add the second number (EAX) to the first number (EBX)
+				      
+				        dtoa    sum, eax                 ; Convert the result in EAX to ASCII and store
+				        output  resultLbl, sum           ; Display the result label and the sum to the user
+
+ 0000008F  2B C0		        sub     eax, eax                 ; subtract eax from eax to get 0
+ 00000091  C3			        ret                              ; return from program
+ 00000092			_MainProc ENDP
+				END                                      ; End of the program
+Microsoft (R) Macro Assembler Version 14.37.32824.0	    09/25/23 16:23:46
+P3_1_Martinez.asm					     Symbols 2 - 1
+
+
+
+
+Macros:
+
+                N a m e                 Type
+
+atod . . . . . . . . . . . . . .	Proc
+atow . . . . . . . . . . . . . .	Proc
+dtoa . . . . . . . . . . . . . .	Proc
+input  . . . . . . . . . . . . .	Proc
+output . . . . . . . . . . . . .	Proc
+wtoa . . . . . . . . . . . . . .	Proc
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000066 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000092 Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+_MainProc  . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000092 Public
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000000h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+_getInput  . . . . . . . . . . .	L Near	 00000000 FLAT	External
+_showOutput  . . . . . . . . . .	L Near	 00000000 FLAT	External
+atodproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+atowproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+dtoaproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+prompt1  . . . . . . . . . . . .	Byte	 00000000 _DATA	
+prompt2  . . . . . . . . . . . .	Byte	 00000013 _DATA	
+resultLbl  . . . . . . . . . . .	Byte	 0000004F _DATA	
+string . . . . . . . . . . . . .	Byte	 00000027 _DATA	
+sum  . . . . . . . . . . . . . .	Byte	 0000005A _DATA	
+wtoaproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+
+	   0 Warnings
+	   0 Errors
