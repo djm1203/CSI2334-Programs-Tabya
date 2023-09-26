@@ -1,0 +1,123 @@
+Microsoft (R) Macro Assembler Version 14.37.32824.0	    09/25/23 20:37:48
+P3_3_Martinez.asm					     Page 1 - 1
+
+
+				;Author:                  Derek Martinez
+				;Assignment Title:        P3_1 Subtract Two Values
+				;Assignment Description:  create a program that gets the difference of two numbers
+				;
+				;
+				;Due Date:                9-26-2023
+				;Date Created:            9-25-2023
+				;Date Last Modified:      9-25-2023
+				;
+
+				.586
+				.MODEL FLAT
+
+				INCLUDE io.h					; header file for input/output
+			      C ; IO.H -- header file for I/O macros (listing suppressed)
+			      C .NOLIST      ; turn off listing
+			      C .LIST        ; begin listing
+			      C 
+
+				.STACK 4096						; set stack size to 4096 bytes
+
+ 00000000			.DATA
+ 00000000 45 6E 74 65 72	prompt1		BYTE		"Enter first number", 0						; create prompt for first number
+	   20 66 69 72 73
+	   74 20 6E 75 6D
+	   62 65 72 00
+ 00000013 45 6E 74 65 72	prompt2		BYTE		"Enter second number", 0					; create prompt for second number
+	   20 73 65 63 6F
+	   6E 64 20 6E 75
+	   6D 62 65 72 00
+ 00000027  00000028 [		string		BYTE		40 DUP (?)												; create buffer for inputs
+	    00
+	   ]
+ 0000004F 54 68 65 20 64	resultLbl BYTE		"The difference is", 0						; create result label
+	   69 66 66 65 72
+	   65 6E 63 65 20
+	   69 73 00
+ 00000061  0000000B [		diff			BYTE		11 DUP (?), 0											; create buffer for result
+	    00
+	   ] 00
+
+ 00000000			.CODE
+ 00000000			_MainProc PROC
+						input		prompt1, string, 40												;	read the input of first number
+						atod		string																		;	convert ASCII to integers
+ 0000002D  8B D8				mov		ebx, eax																	;	store values in memory
+
+						input		prompt2, string, 40												;	read the input of second number
+						atod		string																		;	convert ASCII to integers
+ 0000005C  2B D8				sub			ebx, eax																	;	subtract first from second number
+
+						dtoa		diff, ebx																	; convert diff to ASCII
+						output	resultLbl, diff														; display the resultLbl and difference
+ 0000008F  8B DB				mov			ebx, ebx																	; set ebx to 0
+ 00000091  C3					ret																								; return from program
+ 00000092			_MainProc ENDP
+				END																										; end of program
+Microsoft (R) Macro Assembler Version 14.37.32824.0	    09/25/23 20:37:48
+P3_3_Martinez.asm					     Symbols 2 - 1
+
+
+
+
+Macros:
+
+                N a m e                 Type
+
+atod . . . . . . . . . . . . . .	Proc
+atow . . . . . . . . . . . . . .	Proc
+dtoa . . . . . . . . . . . . . .	Proc
+input  . . . . . . . . . . . . .	Proc
+output . . . . . . . . . . . . .	Proc
+wtoa . . . . . . . . . . . . . .	Proc
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000006D Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000092 Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+_MainProc  . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000092 Public
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000000h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+_getInput  . . . . . . . . . . .	L Near	 00000000 FLAT	External
+_showOutput  . . . . . . . . . .	L Near	 00000000 FLAT	External
+atodproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+atowproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+diff . . . . . . . . . . . . . .	Byte	 00000061 _DATA	
+dtoaproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+prompt1  . . . . . . . . . . . .	Byte	 00000000 _DATA	
+prompt2  . . . . . . . . . . . .	Byte	 00000013 _DATA	
+resultLbl  . . . . . . . . . . .	Byte	 0000004F _DATA	
+string . . . . . . . . . . . . .	Byte	 00000027 _DATA	
+wtoaproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+
+	   0 Warnings
+	   0 Errors
