@@ -1,0 +1,133 @@
+Microsoft (R) Macro Assembler Version 14.37.32824.0	    09/29/23 16:21:31
+MidtermPracticum_Martinez.asm				     Page 1 - 1
+
+
+				;Author:                  Derek Martinez
+				;Assignment Title:        Midterm 1 Practicum -- Football Field
+				;Assignment Description:  create a program that gets the length and width
+				;                         and calculates the perimeter of the field
+				;
+				;
+				;Due Date:                9-30-2023
+				;Date Created:            9-29-2023
+				;Date Last Modified:      9-29-2023
+
+				.586
+				.MODEL FLAT
+
+				INCLUDE io.h            ; Include the header file for input/output
+			      C ; IO.H -- header file for I/O macros (listing suppressed)
+			      C .NOLIST      ; turn off listing
+			      C .LIST        ; begin listing
+			      C 
+
+				.STACK 4096             ; Set the size to 4096 bytes
+
+ 00000000			.DATA
+ 00000000 45 6E 74 65 72	prompt1 BYTE    "Enter length", 0        ; Define a string for the length
+	   20 6C 65 6E 67
+	   74 68 00
+ 0000000D 45 6E 74 65 72	prompt2 BYTE    "Enter width", 0         ; Define a string for the width
+	   20 77 69 64 74
+	   68 00
+ 00000019 45 6E 74 65 72	prompt3 BYTE    "Enter endzones", 0      ; Define a string for endzones
+	   20 65 6E 64 7A
+	   6F 6E 65 73 00
+ 00000028  00000028 [		string  BYTE    40 DUP (?)               ; Define a buffer to store input
+	    00
+	   ]
+ 00000050 54 68 65 20 70	resultLbl BYTE  "The perimeter is", 0    ; Define a label for the sum message
+	   65 72 69 6D 65
+	   74 65 72 20 69
+	   73 00
+ 00000061 00			sum     BYTE    11 DUP (?), 0            ; Define a buffer to store the sum
+
+ 00000000			.CODE
+ 00000000			_MainProc PROC
+				        input   prompt1, string, 40      ; Read user input for the first number
+				        atow    string                   ; Convert the input to an integer and store
+ 0000002D  8B D8		        mov     ebx, eax                 ; Copy the value from EAX to EBX
+ 0000002F  03 DB		        add     ebx, ebx                 ; Double the value in ebx
+
+				        input   prompt2, string, 40      ; Read user input for the second number
+				        atow    string                   ; Convert the input to an integer and store
+ 0000005E  03 C0		        add     eax, eax                 ; Double the value in eax
+
+				        input   prompt3, string, 40      ; Read user input for third number
+				        atow    string                   ; Convert the input to an integer and store
+ 0000008D  03 C3		        add     eax, ebx                 ; Add ebx to eax
+
+				        wtoa    sum, eax                 ; Convert the result in EAX to ASCII and store
+			     1	            mov    bx, eax          ; source value
+MidtermPracticum_Martinez.asm(41) : error A2022:instruction operands must be the same size
+ wtoa(5): Macro Called From
+  MidtermPracticum_Martinez.asm(41): Main Line Code
+				        output  resultLbl, sum           ; Display the sum
+
+ 000000BE  2B C0		        sub     eax, eax                 ; subtract eax from eax to get 0
+ 000000C0  C3			        ret                              ; return from program
+ 000000C1			_MainProc ENDP
+				END                                      ; End of the program
+Microsoft (R) Macro Assembler Version 14.37.32824.0	    09/29/23 16:21:31
+MidtermPracticum_Martinez.asm				     Symbols 2 - 1
+
+
+
+
+Macros:
+
+                N a m e                 Type
+
+atod . . . . . . . . . . . . . .	Proc
+atow . . . . . . . . . . . . . .	Proc
+dtoa . . . . . . . . . . . . . .	Proc
+input  . . . . . . . . . . . . .	Proc
+output . . . . . . . . . . . . .	Proc
+wtoa . . . . . . . . . . . . . .	Proc
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000006D Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 000000CC Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+_MainProc  . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 000000CC Public
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000000h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+_getInput  . . . . . . . . . . .	L Near	 00000000 FLAT	External
+_showOutput  . . . . . . . . . .	L Near	 00000000 FLAT	External
+atodproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+atowproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+dtoaproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+prompt1  . . . . . . . . . . . .	Byte	 00000000 _DATA	
+prompt2  . . . . . . . . . . . .	Byte	 0000000D _DATA	
+prompt3  . . . . . . . . . . . .	Byte	 00000019 _DATA	
+resultLbl  . . . . . . . . . . .	Byte	 00000050 _DATA	
+string . . . . . . . . . . . . .	Byte	 00000028 _DATA	
+sum  . . . . . . . . . . . . . .	Byte	 00000061 _DATA	
+wtoaproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+
+	   0 Warnings
+	   1 Errors
