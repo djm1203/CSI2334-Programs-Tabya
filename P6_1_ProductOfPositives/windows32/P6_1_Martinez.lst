@@ -1,0 +1,144 @@
+Microsoft (R) Macro Assembler Version 14.37.32825.0	    11/01/23 17:19:14
+P6_1_Martinez.asm					     Page 1 - 1
+
+
+				;Author:                  Derek Martinez
+				;Assignment Title:        P6_1 Product Of Positives
+				;Assignment Description:  read ten positive inputs and get product
+				;
+				;
+				;Due Date:                11-7-2023
+				;Date Created:            10-30-2023
+				;Date Last Modified:      10-30-2023
+				;
+
+				.586
+				.MODEL FLAT
+
+				INCLUDE io.h			; header file for input/output
+			      C ; IO.H -- header file for I/O macros (listing suppressed)
+			      C .NOLIST      ; turn off listing
+			      C .LIST        ; begin listing
+			      C 
+
+				.STACK 4096				; set stack size to 4096 bytes
+
+ 00000000			.DATA
+ 00000000 45 6E 74 65 72	prompt1		BYTE		"Enter positive values", 0		; create prompt for values
+	   20 70 6F 73 69
+	   74 69 76 65 20
+	   76 61 6C 75 65
+	   73 00
+ 00000016  00000014 [		string		BYTE		20 DUP (?)										; create buffer for inputs
+	    00
+	   ]
+ 0000002A 52 65 73 75 6C	resultLbl BYTE    "Result", 0										; create result label
+	   74 00
+ 00000031 54 68 65 20 70	prodLbl		BYTE		"The product is:"							; create result label
+	   72 6F 64 75 63
+	   74 20 69 73 3A
+ 00000040  0000000B [		prod			BYTE		11 DUP (?), 0dh, 0ah					; create buffer for result
+	    00
+	   ] 0D 0A
+ 0000004D 4E 75 6D 62 65	zeroLbl		BYTE		"Number of Zeros:"						; create zero label
+	   72 20 6F 66 20
+	   5A 65 72 6F 73
+	   3A
+ 0000005D 00			numZeros	BYTE		6 DUP (?), 0							  	; create buffer for num of zeros
+
+ 00000000			.CODE
+ 00000000			_MainProc PROC
+ 00000000  BB 00000001				mov 			ebx, 1														; copy one to ebx
+ 00000005  66| BA 0000				mov       dx, 0															; copy value to edx
+ 00000009  66| B9 000A				mov				cx, 10														; copy value to ecx
+
+ 0000000D					INPUT_LOOP:
+							input		prompt1, string, 40								; read user input
+							atow		string														; convert ascii to hex
+ 0000003A  66| 83 F8 00					cmp			ax, 0															; compare eax to 0
+ 0000003E  75 08					jnz			NOT_ZERO													; jump if zero
+ 00000040  66| 42					inc			dx																; increment to 0
+ 00000042  66| 83 FA 00					cmp			dx, 0															; compare dx to 0
+ 00000046  75 C5					jne			INPUT_LOOP												; jump if not 0
+
+ 00000048					NOT_ZERO:
+ 00000048  0F B7 C0					movzx		eax, ax
+ 0000004B  0F AF D8					imul		ebx, eax													; multiply ebx by eax
+ 0000004E  E2 BD					loop		INPUT_LOOP												; loop to INPUT_LOOP
+
+ 00000050					DONE:
+							dtoa		prod, ebx													; convert to ascii
+							wtoa		numZeros, dx											; convert to ascii
+							output	resultLbl, prodLbl								; output labels
+
+ 0000009A  2B C0				sub			eax, eax														; set eax to 0
+ 0000009C  C3					ret																					; return from program
+ 0000009D			_MainProc ENDP
+				END																							; end of program
+Microsoft (R) Macro Assembler Version 14.37.32825.0	    11/01/23 17:19:14
+P6_1_Martinez.asm					     Symbols 2 - 1
+
+
+
+
+Macros:
+
+                N a m e                 Type
+
+atod . . . . . . . . . . . . . .	Proc
+atow . . . . . . . . . . . . . .	Proc
+dtoa . . . . . . . . . . . . . .	Proc
+input  . . . . . . . . . . . . .	Proc
+output . . . . . . . . . . . . .	Proc
+wtoa . . . . . . . . . . . . . .	Proc
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000064 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000009D Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+_MainProc  . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000009D Public
+  INPUT_LOOP . . . . . . . . . .	L Near	 0000000D _TEXT	
+  NOT_ZERO . . . . . . . . . . .	L Near	 00000048 _TEXT	
+  DONE . . . . . . . . . . . . .	L Near	 00000050 _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000000h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+_getInput  . . . . . . . . . . .	L Near	 00000000 FLAT	External
+_showOutput  . . . . . . . . . .	L Near	 00000000 FLAT	External
+atodproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+atowproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+dtoaproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+numZeros . . . . . . . . . . . .	Byte	 0000005D _DATA	
+prodLbl  . . . . . . . . . . . .	Byte	 00000031 _DATA	
+prod . . . . . . . . . . . . . .	Byte	 00000040 _DATA	
+prompt1  . . . . . . . . . . . .	Byte	 00000000 _DATA	
+resultLbl  . . . . . . . . . . .	Byte	 0000002A _DATA	
+string . . . . . . . . . . . . .	Byte	 00000016 _DATA	
+wtoaproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+zeroLbl  . . . . . . . . . . . .	Byte	 0000004D _DATA	
+
+	   0 Warnings
+	   0 Errors
