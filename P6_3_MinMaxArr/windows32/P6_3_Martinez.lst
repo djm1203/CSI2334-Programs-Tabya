@@ -1,0 +1,168 @@
+Microsoft (R) Macro Assembler Version 14.37.32825.0	    11/06/23 18:14:08
+P6_3_Martinez.asm					     Page 1 - 1
+
+
+				;Author:									Derek Martinez
+				;Assignment Title:				P6_3 Min-Max Array
+				;Assignment Description:	Read twenty 32-bit values 
+				;													and find the minimum and maximum.
+				;
+				;
+				;Due Date:                11-07-2023
+				;Date Created:            11-01-2023
+				;Date Last Modified:      11-06-2023
+				;
+
+				.586
+				.MODEL FLAT
+
+				INCLUDE io.h			; header file for input/output
+			      C ; IO.H -- header file for I/O macros (listing suppressed)
+			      C .NOLIST      ; turn off listing
+			      C .LIST        ; begin listing
+			      C 
+				 
+				.STACK 4096				; set stack size to 4096 bytes
+
+ 00000000			.DATA
+ 00000000 45 6E 74 65 72	prompt1		BYTE		"Enter positive values", 0	; create prompt for values
+	   20 70 6F 73 69
+	   74 69 76 65 20
+	   76 61 6C 75 65
+	   73 00
+ 00000016  0000000B [		string		BYTE		11 DUP (?)									; create buffer for strings
+	    00
+	   ]
+ 00000021  00000014 [		values		DWORD		20 DUP (?)									; create buffer for array
+	    00000000
+	   ]
+ 00000071 52 65 73 75 6C	resultLbl BYTE    "Result", 0									; create result label
+	   74 00
+ 00000078 54 68 65 20 6D	minLbl		BYTE		"The min is: "			        ; create min label
+	   69 6E 20 69 73
+	   3A 20
+ 00000084  0000000B [		min		  	BYTE		11 DUP (?), 0dh, 0ah				; create buffer for min
+	    00
+	   ] 0D 0A
+ 00000091 54 68 65 20 6D	maxLbl		BYTE		"The max is: "							; create max label
+	   61 78 20 69 73
+	   3A 20
+ 0000009D  0000000B [		max				BYTE		11 DUP (?), 0					  		; create buffer for max
+	    00
+	   ] 00
+
+ 00000000			.CODE
+ 00000000			_MainProc PROC
+ 00000000					START:
+ 00000000  8D 1D 00000021 R			  lea				ebx, values										; address of values in ebx
+ 00000006  B9 00000014					mov				ecx, 20												; copy value to ecx
+							
+
+ 0000000B					INPUT_LOOP:
+							input		prompt1, string, 20							; read user input
+							atod		string													; convert from ascii to decimal
+ 00000038  89 03					mov			[ebx], eax											; mov eax to ebx
+ 0000003A  83 C3 04					add			ebx, 4													; move to next location
+ 0000003D  E2 CC					loop		INPUT_LOOP											; loop to INPUT_LOOP
+
+ 0000003F  8D 1D 00000021 R				lea			ebx, values											; address of values in ebx
+ 00000045  8B 03					mov			eax, [ebx]											; copy first value to min	
+ 00000047  8B 13					mov			edx, [ebx]											; copy first value to max
+ 00000049  83 C3 04					add     ebx, 4													; move to second value
+ 0000004C  B9 00000013					mov			ecx, 19													; reset ecx counter
+
+ 00000051					FIND_MIN_MAX:
+ 00000051  39 03					cmp			[ebx], eax											; compare ebx to eax
+ 00000053  7D 02					jnl			UPDATE_MAX											; if not less move to max
+ 00000055  8B 03					mov			eax, [ebx]											; copy min value 
+
+ 00000057					UPDATE_MAX:
+ 00000057  39 13					cmp			[ebx], edx											; compare ebx to edx
+ 00000059  7E 02					jng			NO_SWITCH												; if not greater move to loop
+ 0000005B  8B 13					mov			edx, [ebx]											; mov ebx value to edx
+							
+ 0000005D					NO_SWITCH:
+ 0000005D  83 C3 04					add			ebx, 4													; add 4 to ebx
+ 00000060  E2 EF					loop		FIND_MIN_MAX										; loop back to finding loop
+
+ 00000062					DONE:
+							dtoa		min, eax												; convert decimal to ascii
+							dtoa		max, edx												; convert decimal to ascii
+							output	resultLbl, minLbl								; output results
+							
+
+ 000000AB  2B C0				sub			eax, eax													; set eax to 0
+ 000000AD  C3					ret																				; return from program
+ 000000AE			_MainProc ENDP
+				END																						; end of program
+Microsoft (R) Macro Assembler Version 14.37.32825.0	    11/06/23 18:14:08
+P6_3_Martinez.asm					     Symbols 2 - 1
+
+
+
+
+Macros:
+
+                N a m e                 Type
+
+atod . . . . . . . . . . . . . .	Proc
+atow . . . . . . . . . . . . . .	Proc
+dtoa . . . . . . . . . . . . . .	Proc
+input  . . . . . . . . . . . . .	Proc
+output . . . . . . . . . . . . .	Proc
+wtoa . . . . . . . . . . . . . .	Proc
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 000000A9 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 000000AE Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+_MainProc  . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 000000AE Public
+  START  . . . . . . . . . . . .	L Near	 00000000 _TEXT	
+  INPUT_LOOP . . . . . . . . . .	L Near	 0000000B _TEXT	
+  FIND_MIN_MAX . . . . . . . . .	L Near	 00000051 _TEXT	
+  UPDATE_MAX . . . . . . . . . .	L Near	 00000057 _TEXT	
+  NO_SWITCH  . . . . . . . . . .	L Near	 0000005D _TEXT	
+  DONE . . . . . . . . . . . . .	L Near	 00000062 _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000000h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+_getInput  . . . . . . . . . . .	L Near	 00000000 FLAT	External
+_showOutput  . . . . . . . . . .	L Near	 00000000 FLAT	External
+atodproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+atowproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+dtoaproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+maxLbl . . . . . . . . . . . . .	Byte	 00000091 _DATA	
+max  . . . . . . . . . . . . . .	Byte	 0000009D _DATA	
+minLbl . . . . . . . . . . . . .	Byte	 00000078 _DATA	
+min  . . . . . . . . . . . . . .	Byte	 00000084 _DATA	
+prompt1  . . . . . . . . . . . .	Byte	 00000000 _DATA	
+resultLbl  . . . . . . . . . . .	Byte	 00000071 _DATA	
+string . . . . . . . . . . . . .	Byte	 00000016 _DATA	
+values . . . . . . . . . . . . .	DWord	 00000021 _DATA	
+wtoaproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+
+	   0 Warnings
+	   0 Errors

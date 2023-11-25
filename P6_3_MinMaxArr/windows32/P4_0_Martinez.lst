@@ -1,0 +1,139 @@
+Microsoft (R) Macro Assembler Version 14.37.32825.0	    11/02/23 10:21:31
+P4_0_Martinez.asm					     Page 1 - 1
+
+
+				;Author:									Derek Martinez
+				;Assignment Title:				P6_3 Min-Max Array
+				;Assignment Description:	Read twenty 32-bit values 
+				;													and find the minimum and maximum.
+				;
+				;
+				;Due Date:                11-07-2023
+				;Date Created:            11-01-2023
+				;Date Last Modified:      11-01-2023
+				;
+
+				.586
+				.MODEL FLAT
+
+				INCLUDE io.h			; header file for input/output
+			      C ; IO.H -- header file for I/O macros (listing suppressed)
+			      C .NOLIST      ; turn off listing
+			      C .LIST        ; begin listing
+			      C 
+
+				.STACK 4096				; set stack size to 4096 bytes
+
+ 00000000			.DATA
+ 00000000 45 6E 74 65 72	prompt1		BYTE		"Enter positive values", 0		; create prompt for values
+	   20 70 6F 73 69
+	   74 69 76 65 20
+	   76 61 6C 75 65
+	   73 00
+ 00000016  00000014 [		values		DWORD		20 DUP (?)										; create buffer for inputs
+	    00000000
+	   ]
+ 00000066 52 65 73 75 6C	resultLbl BYTE    "Result", 0										; create result label
+	   74 00
+ 0000006D 54 68 65 20 6D	minLbl		BYTE		"The min is:"				    			; create min label
+	   69 6E 20 69 73
+	   3A
+ 00000078  0000000B [		min		  	BYTE		11 DUP (?), 0dh, 0ah					; create buffer for min
+	    00
+	   ] 0D 0A
+ 00000085 54 68 65 20 6D	maxLbl		BYTE		"The max is:"									; create max label
+	   61 78 20 69 73
+	   3A
+ 00000090  0000000B [		max				BYTE		11 DUP (?), 0							  	; create buffer for max
+	    00
+	   ] 00
+
+ 00000000			.CODE
+ 00000000			_MainProc PROC
+ 00000000					START:
+ 00000000  BB 00000000					mov 			ebx, 0 													; copy one to ebx
+ 00000005  BA 00000000					mov       edx, 0													; copy value to edx
+ 0000000A  B9 00000014					mov				ecx, 20													; copy value to ecx
+
+ 0000000F					INPUT_LOOP:
+							input		prompt1, values[ebx], 40					; read user input
+							atow		values														; convert ascii to hex
+ 0000003C  83 FB 13					cmp			ebx, 19
+ 0000003F  7D 03					jge			DONE
+ 00000041  43						inc			ebx
+ 00000042  E2 CB					loop		INPUT_LOOP
+
+ 00000044					DONE:
+							;output	resultLbl, sumLbl									; output labels
+
+ 00000044  2B C0				sub			eax, eax														; set eax to 0
+ 00000046  C3					ret																					; return from program
+ 00000047			_MainProc ENDP
+				END																							; end of program
+Microsoft (R) Macro Assembler Version 14.37.32825.0	    11/02/23 10:21:31
+P4_0_Martinez.asm					     Symbols 2 - 1
+
+
+
+
+Macros:
+
+                N a m e                 Type
+
+atod . . . . . . . . . . . . . .	Proc
+atow . . . . . . . . . . . . . .	Proc
+dtoa . . . . . . . . . . . . . .	Proc
+input  . . . . . . . . . . . . .	Proc
+output . . . . . . . . . . . . .	Proc
+wtoa . . . . . . . . . . . . . .	Proc
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000009C Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000047 Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+_MainProc  . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000047 Public
+  START  . . . . . . . . . . . .	L Near	 00000000 _TEXT	
+  INPUT_LOOP . . . . . . . . . .	L Near	 0000000F _TEXT	
+  DONE . . . . . . . . . . . . .	L Near	 00000044 _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000000h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+_getInput  . . . . . . . . . . .	L Near	 00000000 FLAT	External
+_showOutput  . . . . . . . . . .	L Near	 00000000 FLAT	External
+atodproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+atowproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+dtoaproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+maxLbl . . . . . . . . . . . . .	Byte	 00000085 _DATA	
+max  . . . . . . . . . . . . . .	Byte	 00000090 _DATA	
+minLbl . . . . . . . . . . . . .	Byte	 0000006D _DATA	
+min  . . . . . . . . . . . . . .	Byte	 00000078 _DATA	
+prompt1  . . . . . . . . . . . .	Byte	 00000000 _DATA	
+resultLbl  . . . . . . . . . . .	Byte	 00000066 _DATA	
+values . . . . . . . . . . . . .	DWord	 00000016 _DATA	
+wtoaproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+
+	   0 Warnings
+	   0 Errors
