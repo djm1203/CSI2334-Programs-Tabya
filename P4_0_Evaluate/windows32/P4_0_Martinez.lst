@@ -1,0 +1,144 @@
+Microsoft (R) Macro Assembler Version 14.37.32824.0	    10/08/23 12:53:47
+P4_0_Martinez.asm					     Page 1 - 1
+
+
+				;Author:                  Derek Martinez
+				;Assignment Title:        P4_0 Evaluate an Expression
+				;Assignment Description:  takes in x, y, and z values. Then
+				;													evaluates the expression 5x + 5y - 2z
+				;
+				;
+				;Due Date:                10-12-2023
+				;Date Created:            10-08-2023
+				;Date Last Modified:      10-08-2023
+				;
+
+				.586
+				.MODEL FLAT
+
+				INCLUDE io.h																   ; header file for input/output
+			      C ; IO.H -- header file for I/O macros (listing suppressed)
+			      C .NOLIST      ; turn off listing
+			      C .LIST        ; begin listing
+			      C 
+
+				.STACK 4096																		 ; set stack size to 4096 bytes
+
+ 00000000			.DATA
+ 00000000 45 6E 74 65 72	prompt1		BYTE		"Enter number of apples", 0	 ; create prompt for first number
+	   20 6E 75 6D 62
+	   65 72 20 6F 66
+	   20 61 70 70 6C
+	   65 73 00
+ 00000017 45 6E 74 65 72	prompt2		BYTE		"Enter number of oranges", 0 ; create prompt for second number
+	   20 6E 75 6D 62
+	   65 72 20 6F 66
+	   20 6F 72 61 6E
+	   67 65 73 00
+ 0000002F 45 6E 74 65 72	prompt3		BYTE		"Enter number of bananas", 0 ; create prompt for second number
+	   20 6E 75 6D 62
+	   65 72 20 6F 66
+	   20 62 61 6E 61
+	   6E 61 73 00
+ 00000047  00000028 [		string		BYTE		40 DUP (?)									 ; create buffer for inputs
+	    00
+	   ]
+ 0000006F 54 68 65 20 74	resultLbl BYTE		"The total is", 0						 ; create result label
+	   6F 74 61 6C 20
+	   69 73 00
+ 0000007C  0000000B [		sum			BYTE		11 DUP (?), 0									 ; create buffer for result
+	    00
+	   ] 00
+
+ 00000000			.CODE
+ 00000000			_MainProc PROC
+						input		prompt1, string, 40								 ; read the input of first number
+						atod		string														 ; convert ASCII to integers
+ 0000002D  8B D8				mov			ebx, eax													 ; store values in memory
+
+						input		prompt2, string, 40								 ; read the input of second number
+						atod		string														 ; convert ASCII to integers
+ 0000005C  03 D8				add			ebx, eax													 ; add first to second number
+
+ 0000005E  8B C3				mov			eax, ebx													 ; copy value to eax
+ 00000060  03 DB				add			ebx, ebx													 ; double ebx value
+ 00000062  03 DB				add			ebx, ebx													 ; double ebx value again
+ 00000064  03 D8				add			ebx, eax													 ; add eax to ebx 5th multi
+
+						input		prompt3, string, 40								 ; read the input of third number
+						atod		string														 ; convert ASCII to integers
+
+ 00000093  03 C0				add			eax, eax													 ; double eax value
+ 00000095  F7 D8				neg			eax																 ; convert value to negative
+ 00000097  03 C3				add			eax, ebx													 ; add numbers together
+
+						dtoa		sum, eax													 ; convert diff to ASCII
+						output	resultLbl, sum										 ; display the resultLbl and difference
+
+ 000000CA  8B DB				mov			ebx, ebx												   ; set ebx to 0
+ 000000CC  C3					ret																			   ; return from program
+ 000000CD			_MainProc ENDP
+				END																					   ; end of program
+Microsoft (R) Macro Assembler Version 14.37.32824.0	    10/08/23 12:53:47
+P4_0_Martinez.asm					     Symbols 2 - 1
+
+
+
+
+Macros:
+
+                N a m e                 Type
+
+atod . . . . . . . . . . . . . .	Proc
+atow . . . . . . . . . . . . . .	Proc
+dtoa . . . . . . . . . . . . . .	Proc
+input  . . . . . . . . . . . . .	Proc
+output . . . . . . . . . . . . .	Proc
+wtoa . . . . . . . . . . . . . .	Proc
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000088 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 000000CD Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+_MainProc  . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 000000CD Public
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000000h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+_getInput  . . . . . . . . . . .	L Near	 00000000 FLAT	External
+_showOutput  . . . . . . . . . .	L Near	 00000000 FLAT	External
+atodproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+atowproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+dtoaproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+prompt1  . . . . . . . . . . . .	Byte	 00000000 _DATA	
+prompt2  . . . . . . . . . . . .	Byte	 00000017 _DATA	
+prompt3  . . . . . . . . . . . .	Byte	 0000002F _DATA	
+resultLbl  . . . . . . . . . . .	Byte	 0000006F _DATA	
+string . . . . . . . . . . . . .	Byte	 00000047 _DATA	
+sum  . . . . . . . . . . . . . .	Byte	 0000007C _DATA	
+wtoaproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+
+	   0 Warnings
+	   0 Errors

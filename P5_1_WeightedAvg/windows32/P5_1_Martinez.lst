@@ -1,0 +1,222 @@
+Microsoft (R) Macro Assembler Version 14.37.32824.0	    10/22/23 23:26:56
+P5_1_Martinez.asm					     Page 1 - 1
+
+
+				;Author:                  Derek Martinez
+				;Assignment Title:        P5_1 Weighted Average
+				;Assignment Description:  computes weighted average of 4 user
+				;													inputted scores
+				;
+				;
+				;Due Date:                10-22-2023
+				;Date Created:            10-18-2023
+				;Date Last Modified:      10-18-2023
+				;                         10-20-2023
+				;                         10-22-2023
+				;
+
+				.586
+				.MODEL FLAT
+
+				INCLUDE io.h			; header file for input/output
+			      C ; IO.H -- header file for I/O macros (listing suppressed)
+			      C .NOLIST      ; turn off listing
+			      C .LIST        ; begin listing
+			      C 
+
+				.STACK 4096				; set stack size to 4096 bytes
+
+ 00000000			.DATA
+ 00000000 45 6E 74 65 72	prompt1		BYTE		"Enter first score", 0	 ; create prompt for first number
+	   20 66 69 72 73
+	   74 20 73 63 6F
+	   72 65 00
+ 00000012 45 6E 74 65 72	prompt2		BYTE		"Enter second score", 0	 ; create prompt for second number
+	   20 73 65 63 6F
+	   6E 64 20 73 63
+	   6F 72 65 00
+ 00000025 45 6E 74 65 72	prompt3		BYTE		"Enter third score", 0	 ; create prompt for third number
+	   20 74 68 69 72
+	   64 20 73 63 6F
+	   72 65 00
+ 00000037 45 6E 74 65 72	prompt4		BYTE		"Enter fourth score", 0	 ; create prompt for fourth number
+	   20 66 6F 75 72
+	   74 68 20 73 63
+	   6F 72 65 00
+ 0000004A 45 6E 74 65 72	prompt5		BYTE		"Enter weight 1", 0			 ; create prompt for first weight
+	   20 77 65 69 67
+	   68 74 20 31 00
+ 00000059 45 6E 74 65 72	prompt6		BYTE		"Enter weight 2", 0			 ; create prompt for second weight
+	   20 77 65 69 67
+	   68 74 20 32 00
+ 00000068 45 6E 74 65 72	prompt7		BYTE		"Enter weight 3", 0			 ; create prompt for third weight
+	   20 77 65 69 67
+	   68 74 20 33 00
+ 00000077 45 6E 74 65 72	prompt8		BYTE		"Enter weight 4", 0			 ; create prompt for fourth weight
+	   20 77 65 69 67
+	   68 74 20 34 00
+
+ 00000086  00000028 [		string		BYTE		40 DUP (?)							 ; create buffer for inputs
+	    00
+	   ]
+ 000000AE 52 65 73 75 6C	resultLbl BYTE    "Result", 0              ; create result label
+	   74 00
+ 000000B5 54 68 65 20 77	sumLbl		BYTE		"The weighted sum:", 20h ; create average label
+	   65 69 67 68 74
+	   65 64 20 73 75
+	   6D 3A 20
+ 000000C7  0000000B [		sum			  BYTE		11 DUP (?), 0dh  				 ; create buffer for sum
+	    00
+	   ] 0D
+ 000000D3 54 68 65 20 61	avgLbl		BYTE		"The average:", 20h 		 ; create average label
+	   76 65 72 61 67
+	   65 3A 20
+ 000000E0  0000000B [		avg			  BYTE		11 DUP (?), 0   				 ; create buffer for average
+	    00
+	   ] 00
+ 000000EC  0000000B [		score1	  DWORD		11 DUP (?), 0						 ; create buffer for score1
+	    00000000
+	   ] 00000000
+ 0000011C  0000000B [		score2	  DWORD		11 DUP (?), 0						 ; create buffer for score2
+	    00000000
+	   ] 00000000
+ 0000014C  0000000B [		score3	  DWORD		11 DUP (?), 0						 ; create buffer for score3
+	    00000000
+	   ] 00000000
+ 0000017C  0000000B [		score4	  DWORD		11 DUP (?), 0						 ; create buffer for score4
+	    00000000
+	   ] 00000000
+
+ 00000000			.CODE
+ 00000000			_MainProc PROC
+				    input   prompt1, string, 40            ; read user input
+				    atod    string                         ; convert ascii to decimal
+ 0000002D  A3 000000EC R	    mov     score1, eax                    ; store score from eax
+
+				    input   prompt5, string, 40            ; read user input
+				    atod    string                         ; convert ascii to decimal
+ 0000005F  8B D8		    mov     ebx, eax                       ; add eax to total in ebx
+ 00000061  0F AF 05		    imul    eax, score1                    ; multiply eax by score
+	   000000EC R
+ 00000068  8B C8		    mov     ecx, eax                       ; add eax to ecx
+
+				    input   prompt2, string, 40            ; read user input
+				    atod    string                         ; convert ascii to decimal
+ 00000097  A3 0000011C R	    mov     score2, eax                    ; store score from eax
+
+				    input   prompt6, string, 40            ; read user input
+				    atod    string                         ; convert ascii to decimal
+ 000000C9  03 D8		    add     ebx, eax                       ; add eax to total in ebx
+ 000000CB  0F AF 05		    imul    eax, score2                    ; multiply eax by score
+	   0000011C R
+ 000000D2  03 C8		    add     ecx, eax                       ; add eax to ecx
+
+				    input   prompt3, string, 40            ; read user input
+				    atod    string                         ; convert ascii to decimal
+ 00000101  A3 0000014C R	    mov     score3, eax                    ; store score from eax
+
+				    input   prompt7, string, 40            ; read user input
+				    atod    string                         ; convert ascii to decimal
+ 00000133  03 D8		    add     ebx, eax                       ; add eax to total in ebx
+ 00000135  0F AF 05		    imul    eax, score3                    ; multiply eax by score
+	   0000014C R
+ 0000013C  03 C8		    add     ecx, eax                       ; add eax to ecx
+
+				    input   prompt4, string, 40            ; read user input
+				    atod    string                         ; convert ascii to decimal
+ 0000016B  A3 0000017C R	    mov     score4, eax                    ; 
+
+				    input   prompt8, string, 40            ; read user input
+				    atod    string                         ; convert ascii to decimal
+ 0000019D  03 D8		    add     ebx, eax                       ; add eax to total in ebx
+ 0000019F  0F AF 05		    imul    eax, score4                    ; multiply eax by score
+	   0000017C R
+ 000001A6  03 C8		    add     ecx, eax                       ; add eax to ecx
+
+ 000001A8  8B C1		    mov     eax, ecx                       ; move ecx value to eax
+ 000001AA  2B D2		    sub     edx, edx                       ; clear edx
+ 000001AC  F7 FB		    idiv    ebx                            ; divide eax by ebx
+
+				    dtoa    sum, ecx                       ; convert to ascii
+				    dtoa    avg, eax                       ; convert to ascii
+				    output  resultLbl, sumLbl              ; output average and sum
+
+ 000001F7  2B C0		    sub     eax, eax                       ; clear eax
+ 000001F9  C3			    ret
+ 000001FA			_MainProc ENDP
+				END																			   ; end of program
+Microsoft (R) Macro Assembler Version 14.37.32824.0	    10/22/23 23:26:56
+P5_1_Martinez.asm					     Symbols 2 - 1
+
+
+
+
+Macros:
+
+                N a m e                 Type
+
+atod . . . . . . . . . . . . . .	Proc
+atow . . . . . . . . . . . . . .	Proc
+dtoa . . . . . . . . . . . . . .	Proc
+input  . . . . . . . . . . . . .	Proc
+output . . . . . . . . . . . . .	Proc
+wtoa . . . . . . . . . . . . . .	Proc
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 000001AC Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 000001FA Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+_MainProc  . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 000001FA Public
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000000h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+_getInput  . . . . . . . . . . .	L Near	 00000000 FLAT	External
+_showOutput  . . . . . . . . . .	L Near	 00000000 FLAT	External
+atodproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+atowproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+avgLbl . . . . . . . . . . . . .	Byte	 000000D3 _DATA	
+avg  . . . . . . . . . . . . . .	Byte	 000000E0 _DATA	
+dtoaproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+prompt1  . . . . . . . . . . . .	Byte	 00000000 _DATA	
+prompt2  . . . . . . . . . . . .	Byte	 00000012 _DATA	
+prompt3  . . . . . . . . . . . .	Byte	 00000025 _DATA	
+prompt4  . . . . . . . . . . . .	Byte	 00000037 _DATA	
+prompt5  . . . . . . . . . . . .	Byte	 0000004A _DATA	
+prompt6  . . . . . . . . . . . .	Byte	 00000059 _DATA	
+prompt7  . . . . . . . . . . . .	Byte	 00000068 _DATA	
+prompt8  . . . . . . . . . . . .	Byte	 00000077 _DATA	
+resultLbl  . . . . . . . . . . .	Byte	 000000AE _DATA	
+score1 . . . . . . . . . . . . .	DWord	 000000EC _DATA	
+score2 . . . . . . . . . . . . .	DWord	 0000011C _DATA	
+score3 . . . . . . . . . . . . .	DWord	 0000014C _DATA	
+score4 . . . . . . . . . . . . .	DWord	 0000017C _DATA	
+string . . . . . . . . . . . . .	Byte	 00000086 _DATA	
+sumLbl . . . . . . . . . . . . .	Byte	 000000B5 _DATA	
+sum  . . . . . . . . . . . . . .	Byte	 000000C7 _DATA	
+wtoaproc . . . . . . . . . . . .	L Near	 00000000 FLAT	External
+
+	   0 Warnings
+	   0 Errors
