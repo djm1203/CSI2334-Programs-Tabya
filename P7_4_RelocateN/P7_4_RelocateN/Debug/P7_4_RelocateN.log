@@ -1,0 +1,4 @@
+﻿  P7_4_Martinez.cpp
+c:\users\derek\desktop\compsystems\p7_4_relocaten\p7_4_relocaten\p7_4_martinez.cpp(17): warning C4102: 'START': unreferenced label
+c:\users\derek\desktop\compsystems\p7_4_relocaten\p7_4_relocaten\p7_4_martinez.cpp(54): warning C4101: 'ndx': unreferenced local variable
+  P7_4_RelocateN.vcxproj -> C:\Users\derek\Desktop\CompSystems\P7_4_RelocateN\Debug\P7_4_RelocateN.exe
