@@ -1,0 +1,4 @@
+﻿  P10_0_VolumeOfEgg.cpp
+c:\users\derek\desktop\compsystems\p10_0_volumeofegg\p10_0_volumeofegg\p10_0_volumeofegg.cpp(19): warning C4102: 'START': unreferenced label
+c:\users\derek\desktop\compsystems\p10_0_volumeofegg\p10_0_volumeofegg\p10_0_volumeofegg.cpp(37): warning C4102: 'DONE': unreferenced label
+  P10_0_VolumeOfEgg.vcxproj -> C:\Users\derek\Desktop\CompSystems\P10_0_VolumeOfEgg\Debug\P10_0_VolumeOfEgg.exe
