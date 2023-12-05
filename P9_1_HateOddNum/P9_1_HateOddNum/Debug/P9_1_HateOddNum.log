@@ -1,0 +1,4 @@
+﻿  P9_1_Martinez.cpp
+c:\users\derek\desktop\compsystems\p9_1_hateoddnum\p9_1_hateoddnum\p9_1_martinez.cpp(18): warning C4102: 'START': unreferenced label
+c:\users\derek\desktop\compsystems\p9_1_hateoddnum\p9_1_hateoddnum\p9_1_martinez.cpp(43): warning C4102: 'DONE': unreferenced label
+  P9_1_HateOddNum.vcxproj -> C:\Users\derek\Desktop\CompSystems\P9_1_HateOddNum\Debug\P9_1_HateOddNum.exe
